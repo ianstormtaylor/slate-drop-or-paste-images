@@ -77,7 +77,10 @@ const plugins = [
 - `extensions: Array(String)` — an array of allowed extensions.
 - `uploadImages: Boolean` - (Default: `false`), if true then images are uploaded to configured url, otherwise they are inserted with dataURL.
 - `uploadUrl: String` - the URL endpoint for image uploads.
-- `uploadMethod: String` - (Default: `'post'`) the endpoint method for image uploads.
+- `uploadMethod: String` - (Default: `'post'`) the endpoint method used.
+- `uploadParamName: String` - (Default: `'file'`) the file parameter name used for the image.
+- `uploadParams: Object` - (Default: `{}`) an object of additional params to send. This is the same as adding hidden input fields to a form element.
+- `uploadHeaders: Object` - (Default: `{}`) an object of additional headers to send
 - `getImageUrl: Function` - a function that takes the server's upload response and returns the image url. Alternatively, it can return a promise that resolves with the image url; this is useful if additional requests are required to get the uploaded image's url. If server response is JSON, it is parsed for consumption.
 
 
