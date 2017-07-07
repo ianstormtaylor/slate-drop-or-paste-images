@@ -35,21 +35,50 @@ import InsertImages from 'slate-drop-or-paste-images'
 const plugins = [
   InsertImages({
     extensions: ['png'],
-    applyTransform: (transform, file) => {
+    applyTransform: (transform, key, data) => {
       return transform.insertBlock({
         type: 'image',
         isVoid: true,
-        data: { file }
+        key,
+        data
       })
     }
   })
 ]
 ```
 
-#### Arguments
-- `applyTransform: Function` — a transforming function that is passed a Slate `Transform` and a `File` object representing an image. It should apply the proper transform that inserts the image into Slate based on your schema.
+## Usage for Uploads
+
+```js
+import InsertImages from 'slate-drop-or-paste-images'
+
+const plugins = [
+  InsertImages({
+    applyTransform: (transform, key, data) => {
+      return transform.insertBlock({
+        type: 'image',
+        isVoid: true,
+        key,
+        data
+      })
+    },
+    uploadImages: true,
+    uploadUrl: '/upload',
+
+    // eg: ServerResponse = { src: '/uploads/foo.png' }
+    getImageUrl: (res) => res.src
+  })
+]
+```
+
+### Arguments
+- `applyTransform: Function` — a transforming function that is passed a Slate `Transform`, `key` and `data` object. It should apply the proper transform that inserts the image into Slate based on your schema.
   It can return a promise resolved with the resulting Slate `Transform`.
-- `[extensions: Array]` — an array of allowed extensions.
+- `extensions: Array(String)` — an array of allowed extensions.
+- `uploadImages: Boolean` - (Default: `false`), if true then images are uploaded to configured url, otherwise they are inserted with dataURL.
+- `uploadUrl: String` - the URL endpoint for image uploads.
+- `uploadMethod: String` - (Default: `'post'`) the endpoint method for image uploads.
+- `getImageUrl: Function` - a function that takes the server's upload response and returns the image url. Alternatively, it can return a promise that resolves with the image url; this is useful if additional requests are required to get the uploaded image's url. If server response is JSON, it is parsed for consumption.
 
 
 ## Development
@@ -58,7 +87,7 @@ Clone the repository and then run:
 
 ```
 npm install
-npm watch
+npm run watch
 ```
 
 And open the example page in your browser:
