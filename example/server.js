@@ -1,28 +1,28 @@
-var express = require('express');
-var path = require('path');
-var multer  = require('multer');
+const express = require('express')
+const path = require('path')
+const multer = require('multer')
 
-var uploadDir = path.join(__dirname, 'uploads');
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadDir);
+const uploadDir = path.join(__dirname, 'uploads')
+const storage = multer.diskStorage({
+  destination(req, file, cb) {
+    cb(null, uploadDir)
   },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '_' + file.originalname);
+  filename(req, file, cb) {
+    cb(null, `${Date.now()}_${file.originalname}`)
   }
 })
 
-var upload = multer({ storage: storage });
+const upload = multer({ storage })
 
-var app = module.exports = express();
+const app = module.exports = express()
 
-app.post('/upload', upload.single('file'), function (req, res, next) {
-  res.send({ src: '/uploads/' + req.file.filename });
-});
+app.post('/upload', upload.single('file'), (req, res, next) => {
+  res.send({ src: `/uploads/${req.file.filename}` })
+})
 
-app.get('*', express.static(__dirname));
+app.get('*', express.static(__dirname))
 
 if (!module.parent) {
-  app.listen(8888);
-  console.log('Express started on port 8888');
+  app.listen(8888)
+  console.log('Express started on port 8888')
 }

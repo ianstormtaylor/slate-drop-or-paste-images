@@ -7,7 +7,7 @@ import { Editor, Raw } from 'slate'
 
 class Image extends React.Component {
 
-  state = {};
+  state = {}
 
   componentDidMount() {
     const { node } = this.props
@@ -18,30 +18,31 @@ class Image extends React.Component {
 
   load(file) {
     const reader = new FileReader()
-    reader.addEventListener('load', () => this.setState({ dataURL: reader.result }));
+    reader.addEventListener('load', () => this.setState({ dataURL: reader.result }))
     reader.readAsDataURL(file)
   }
 
   render() {
     const { attributes } = this.props
-    const { dataURL } = this.state;
-    const { data } = this.props.node;
+    const { dataURL } = this.state
+    const { data } = this.props.node
 
-    let src = data.get('src');
-    const isLoading = !src && !dataURL;
-    const isUploading = !src && data.get('isUpload');
+    let src = data.get('src')
+    const isLoading = !src && !dataURL
+    const isUploading = !src && data.get('isUpload')
 
-    if (!isUploading && !src) src = this.state.dataURL;
+    if (!isUploading && !src) src = this.state.dataURL
 
-    return <div className="image">
-      {isLoading && <div className="loadingtext">Loading...</div>}
-      {isUploading && <div>
-        <div className="progress">{data.get('uploadProgress')}%</div>
-        {dataURL && <img className="bgimg" src={dataURL} />}
-      </div>}
-      {src && <img {...attributes} src={src} />}
-    </div>;
-
+    return (
+      <div className="image">
+        {isLoading && <div className="loadingtext">Loading...</div>}
+        {isUploading && <div>
+          <div className="progress">{data.get('uploadProgress')}%</div>
+          {dataURL && <img className="bgimg" src={dataURL} />}
+        </div>}
+        {src && <img {...attributes} src={src} />}
+      </div>
+    )
   }
 
 }
@@ -69,11 +70,11 @@ class Example extends React.Component {
       },
       getImageUrl: (res) => res.src
     })
-  ];
+  ]
 
   state = {
     state: Raw.deserialize(initialState, { terse: true })
-  };
+  }
 
   onChange = (state) => {
     this.setState({ state })

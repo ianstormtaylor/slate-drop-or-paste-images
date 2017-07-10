@@ -10,7 +10,7 @@
     "dist": "babel ./lib --out-dir ./dist",
     "example": "browserify ./example/index.js --debug --transform babelify > ./example/build.js",
     "gh-pages": "npm run dist && npm run example && gh-pages --dist ./example",
-    "lint": "eslint 'lib/**/*.js' 'example/index.js'",
+    "lint": "eslint 'lib/**/*.js' 'example/index.js' 'example/server.js'",
     "prepublish": "npm run dist",
     "start": "node ./example/server.js",
     "test": "npm run lint",
