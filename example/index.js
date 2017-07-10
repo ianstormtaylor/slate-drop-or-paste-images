@@ -13,7 +13,7 @@ class Image extends React.Component {
     const { node } = this.props
     const { data } = node
     const file = data.get('file')
-    this.load(file)
+    if (file) this.load(file)
   }
 
   load(file) {
