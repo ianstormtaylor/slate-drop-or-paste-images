@@ -1,5 +1,4 @@
 var express = require('express');
-var uuidv4 = require('uuid/v4');
 var path = require('path');
 var multer  = require('multer');
 
