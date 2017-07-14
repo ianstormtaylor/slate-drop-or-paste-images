@@ -7,33 +7,49 @@ import { Editor, Raw } from 'slate'
 
 class Image extends React.Component {
 
-  state = {};
+  state = {}
 
   componentDidMount() {
     const { node } = this.props
     const { data } = node
     const file = data.get('file')
-    this.load(file)
+    if (file) this.load(file)
   }
 
   load(file) {
     const reader = new FileReader()
-    reader.addEventListener('load', () => this.setState({ src: reader.result }))
+    reader.addEventListener('load', () => this.setState({ dataURL: reader.result }))
     reader.readAsDataURL(file)
   }
 
   render() {
     const { attributes } = this.props
-    const { src } = this.state
-    return src
-      ? <img {...attributes} src={src} />
-      : <span>Loading...</span>
+    const { dataURL } = this.state
+    const { data } = this.props.node
+
+    let src = data.get('src')
+    const isLoading = !src && !dataURL
+    const isUploading = !src && data.get('isUpload')
+
+    if (!isUploading && !src) src = this.state.dataURL
+
+    return (
+      <div className="image">
+        {isLoading && <div className="loadingtext">Loading...</div>}
+        {isUploading && <div>
+          <div className="progress">{data.get('uploadProgress')}%</div>
+          {dataURL && <img className="bgimg" src={dataURL} />}
+        </div>}
+        {src && <img {...attributes} src={src} />}
+      </div>
+    )
   }
 
 }
 
 const schema = {
   nodes: {
+    paragraph: (props) => <p>{props.children}</p>,
     image: Image
   }
 }
@@ -42,19 +58,23 @@ class Example extends React.Component {
 
   plugins = [
     InsertImages({
-      applyTransform: (transform, file) => {
+      uploadImages: true,
+      uploadUrl: '/upload',
+      applyTransform: (transform, key, data) => {
         return transform.insertBlock({
           type: 'image',
           isVoid: true,
-          data: { file },
+          key,
+          data
         })
-      }
+      },
+      getImageUrl: (res) => res.src
     })
-  ];
+  ]
 
   state = {
     state: Raw.deserialize(initialState, { terse: true })
-  };
+  }
 
   onChange = (state) => {
     this.setState({ state })

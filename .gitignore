@@ -1,3 +1,5 @@
 dist
 node_modules
 example/build.js
+example/uploads/**
+!example/uploads/.gitkeep
