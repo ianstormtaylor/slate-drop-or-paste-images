@@ -1,9 +1,9 @@
 {
-  "name": "slate-drop-or-paste-images",
+  "name": "nomad-slate-drop-or-paste-images",
   "description": "A Slate plugin that inserts images on drop or paste.",
   "version": "0.5.0",
   "license": "MIT",
-  "repository": "git://github.com/ianstormtaylor/slate-drop-or-paste-images.git",
+  "repository": "git://github.com/dxtr026/slate-drop-or-paste-images.git",
   "main": "./dist/index.js",
   "scripts": {
     "clean": "rm -rf ./dist ./node_modules",
