@@ -47,7 +47,7 @@ const plugins = [
 ```
 
 #### Arguments
-- `applyTransform: Function` — a transforming function that is passed a Slate `Transform` and a `File` object representing an image. It should apply the proper transform that inserts the image into Slate based on your schema.
+- `applyTransform: Function` — a transforming function that is passed a Slate `Transform`, a `File` object representing an image, and the `Editor` instance. It should apply the proper transform that inserts the image into Slate based on your schema.
   It can return a promise resolved with the resulting Slate `Transform`.
 - `[extensions: Array]` — an array of allowed extensions.
 
