@@ -11,6 +11,7 @@
     "example": "browserify ./example/index.js --debug --transform babelify > ./example/build.js",
     "gh-pages": "npm run dist && npm run example && gh-pages --dist ./example",
     "lint": "eslint 'lib/**/*.js' 'example/index.js'",
+    "prepare": "npm run dist",
     "prepublish": "npm run dist",
     "start": "http-server ./example -p 8888",
     "test": "npm run lint",
